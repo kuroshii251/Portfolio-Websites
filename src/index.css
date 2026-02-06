@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -8,7 +10,6 @@
   color-scheme: light dark;
   background-color: #242424;
   
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -18,8 +19,7 @@
 a {
   font-weight: 500;
   text-decoration: inherit;
-    font-family: "Cascadia Code", sans-serif;
-    font-weight: 600;
+    font-family: "JetBrains Mono", monospace;
   
 }
 
@@ -28,13 +28,13 @@ a:hover {
 
 
 h1 {
-      font-family: "Cascadia Code", sans-serif;
+    font-family: "JetBrains Mono", monospace;
 
 
 }
 
 p {
-    font-family: "Source Code Pro", monospace;
+    font-family: "JetBrains Mono", monospace;
     border: 4;
     border-color:"black";
 }
