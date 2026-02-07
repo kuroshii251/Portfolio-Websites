@@ -505,7 +505,7 @@ function Project() {
             <img src={sakusiswa} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" alt="Saku Siswa" />
           </div>
           <div className="p-6 flex flex-col justify-between h-64">
-            <div>
+        kuroshii251
               <h2 className="text-yellow-500 text-2xl font-semibold text-center mb-4">Saku Siswa</h2>
               <p className="text-yellow-500 text-sm text-center">
                 A student financial management system designed to help students
@@ -665,7 +665,7 @@ function Footer() {
                                 <a href="https://www.instagram.com/kuroshii274._">
                   <i className="fa-brands fa-instagram text-yellow-500 text-3xl"></i>
                 </a>
-                <a href="https://github.com/sncthyz">
+                <a href="https://github.com/kuroshii251">
                   <i className="fa-brands fa-github text-yellow-500  text-3xl"></i>
                 </a>
               </div>
