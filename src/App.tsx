@@ -12,9 +12,8 @@ import ts from "./assets/ts.svg";
 import portfolio5 from "./assets/portfolio5.png";
 
 import Project1 from "./assets/project1.png";
-
 import ctf from './assets/logo/imagesctf.jpg';
-import bootstrap from "./assets/logo/bootstrap-fill-svgrepo-com.svg";
+import bootstrap from "./assets/bootstrap.png";
 import php from "./assets/logo/php-svgrepo-com.svg";
 import python from "./assets/logo/python-svgrepo-com.svg";
 import tailwind from "./assets/logo/tailwind-svgrepo-com.svg";
