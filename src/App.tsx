@@ -10,8 +10,7 @@ import { useEffect, useState } from "react";
 import linux from './assets/logo/linux-svgrepo-com.svg';
 import ts from "./assets/ts.svg";
 import portfolio5 from "./assets/portfolio5.png";
-
-import Project1 from "./assets/project1.png";
+import sakusiswa from "./assets/sakusiswa.png";
 import ctf from './assets/logo/imagesctf.jpg';
 import bootstrap from "./assets/bootstrap.png";
 import php from "./assets/logo/php-svgrepo-com.svg";
@@ -503,7 +502,7 @@ function Project() {
 
         <div className="bg-black rounded-2xl w-72 sm:w-80 overflow-hidden border border-yellow-500/20 shadow-lg hover:-translate-y-2 hover:shadow-yellow-500/30 transition-all duration-300">
           <div className="h-60 overflow-hidden">
-            <img src={Project1} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" alt="Saku Siswa" />
+            <img src={sakusiswa} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" alt="Saku Siswa" />
           </div>
           <div className="p-6 flex flex-col justify-between h-64">
             <div>
