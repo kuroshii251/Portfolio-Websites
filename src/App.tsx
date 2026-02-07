@@ -554,7 +554,6 @@ function Project() {
         </div>
 
       </div>
-    </div>
   );
 }
 
