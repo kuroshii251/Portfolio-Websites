@@ -500,20 +500,16 @@ function Project() {
           </div>
         </div>
 
-        <div className="bg-black rounded-2xl w-72 sm:w-80 overflow-hidden border border-yellow-500/20 shadow-lg hover:-translate-y-2 hover:shadow-yellow-500/30 transition-all duration-300">
+          <div className="bg-black rounded-2xl w-72 sm:w-80 overflow-hidden border border-yellow-500/20 shadow-lg hover:-translate-y-2 hover:shadow-yellow-500/30 transition-all duration-300">
           <div className="h-60 overflow-hidden">
-            <img src={sakusiswa} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" alt="Saku Siswa" />
-          </div>
+            <img src={sakusiswa} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" alt="Saku Siswa" />           </div>
           <div className="p-6 flex flex-col justify-between h-64">
-        kuroshii251
-              <h2 className="text-yellow-500 text-2xl font-semibold text-center mb-4">Saku Siswa</h2>
-              <p className="text-yellow-500 text-sm text-center">
-                A student financial management system designed to help students
-                manage and monitor their expenses.
-              </p>
+            <div>
+   <h2 className="text-yellow-500 text-2xl font-semibold text-center mb-4">Saku Siswa</h2>      
+     <p className="text-yellow-500 text-sm text-center">                 A student financial management system designed to help students                 manage and monitor their expenses.               </p>
             </div>
             <a
-              href="https://github.com/sncthyz/Saku-Siswa"
+              href="https://drive.google.com/file/d/1OD4UT5H0jQQZN6uLEM0KvRud4Me_35RB/view"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-6 mx-auto w-32 py-2 rounded-xl border border-yellow-500 text-yellow-500 font-semibold text-center hover:bg-yellow-500 hover:text-black transition duration-300"
@@ -522,6 +518,9 @@ function Project() {
             </a>
           </div>
         </div>
+
+     
+        
 
         <div className="bg-black rounded-2xl w-72 sm:w-80 overflow-hidden border border-yellow-500/20 shadow-lg hover:-translate-y-2 hover:shadow-yellow-500/30 transition-all duration-300">
           <div className="h-60 overflow-hidden">
@@ -554,6 +553,7 @@ function Project() {
         </div>
 
       </div>
+      </div>
   );
 }
 
@@ -569,7 +569,7 @@ function Contact() {
           Contact
         </h1>
         <p className="text-yellow-500 text-xl mb-10">You can contact me by this contact</p>
-        <div className="grid rounded-2xl sm:grid-cols-2 bg-blue-100 border-4 border-black">
+        <div className="grid rounded-2xl sm:grid-cols-2 place-items-center bg-blue-100 border-4 border-black">
           <div className=" sm:w-100 w-80 sm:h-90 h-100 rounded-xl place-content-center">
             <form
               action="https://formspree.io/f/myzpqran"
@@ -608,7 +608,7 @@ function Contact() {
               </button>
             </form>
           </div>
-          <div className="bg-black p-5 space-y-8 h-full place-content-center">
+          <div className="bg-black p-10 space-y-8 h-full place-content-center">
             <div className="place-content-center space-y-10">
               <div className=" flex space-x-3">
                 <i className="fa-brands text-yellow-500 fa-whatsapp  text-3xl"></i>
