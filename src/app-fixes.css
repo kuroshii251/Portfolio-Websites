@@ -1,0 +1,5 @@
+.home-profile{width:min(42%,420px)}
+@media (max-width: 640px){
+  .home-profile{width:100%; margin-left:0; margin-top:28px;}
+}
+

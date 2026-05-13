@@ -36,6 +36,7 @@ import cv           from "./assets/CV - Andika Cahya Rahman.pdf";
 import git          from "./assets/gittt.png";
 import github       from "./assets/github.webp";
 import robloxstudio from "./assets/rstudio.png";
+import profile from "./assets/profile.png";
 
 const GLOBAL_CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap');
@@ -189,7 +190,7 @@ function LoadingScreen({ fadeout }: { fadeout: boolean }) {
     const id = setInterval(() => {
       if (i < boot.length) setLines((p) => [...p, boot[i++]]);
       else clearInterval(id);
-    }, 600);
+    }, 800);
     return () => clearInterval(id);
   }, []);
 
@@ -292,9 +293,10 @@ function Navbar() {
             <span style={{ fontFamily: "var(--font-mono)", color: "var(--green)", fontSize: 13 }}>{"]"}</span>
           </div>
 
-          {/* Desktop links */}
-          <div className="hidden sm:flex" style={{ gap: 4, display: "flex" }}>
-            {NAV_LINKS.map((l) => (
+<div
+  className="hidden sm:flex"
+  style={{ gap: 4 }}
+>            {NAV_LINKS.map((l) => (
               <a
                 key={l}
                 href={`#${l.toLowerCase()}`}
@@ -317,7 +319,6 @@ function Navbar() {
             ))}
           </div>
 
-          {/* Mobile hamburger */}
           <DisclosureButton
             className="sm:hidden"
             style={{ background: "none", border: "none", cursor: "pointer", color: "var(--green)" }}
@@ -371,7 +372,6 @@ function Typewriter({ text, speed = 80 }: { text: string; speed?: number }) {
     }
 
     if (mode === "pausing") {
-      // jeda setelah selesai mengetik
       t = window.setTimeout(() => {
         setMode("deleting");
       }, 900);
@@ -379,7 +379,6 @@ function Typewriter({ text, speed = 80 }: { text: string; speed?: number }) {
 
     if (mode === "deleting") {
       if (idx <= 0) {
-        // mulai lagi typing dari awal
         setMode("typing");
         setOut("");
         setIdx(0);
@@ -435,21 +434,19 @@ function Home() {
   useEffect(() => { setTimeout(() => setShow(true), 300); }, []);
 
   return (
-    <section
-      id="home"
-      style={{
-        minHeight: "92vh",
-        display: "flex",
-        alignItems: "center",
-        padding: "60px 24px",
-        maxWidth: 1200,
-        margin: "0 auto",
-        position: "relative",
-      }}
-    >
-      {/* background grid */}
+   <section
+  id="home"
+  className="flex flex-col md:flex-row items-center justify-center gap-10"
+  style={{
+    minHeight: "92vh",
+    padding: "60px 24px",
+    maxWidth: 1200,
+    margin: "0 auto",
+    position: "relative",
+  }}
+>
       <div style={{
-        position: "absolute", inset: 0,
+       position: "relative", maxWidth: 680, flex: 1, inset: 0,
         backgroundImage: `
           linear-gradient(rgba(0,255,65,0.03) 1px, transparent 1px),
           linear-gradient(90deg, rgba(0,255,65,0.03) 1px, transparent 1px)
@@ -556,7 +553,14 @@ function Home() {
         </div>
       </div>
 
-      {/* Corner decoration */}
+     <div className="flex">
+  <img
+    src={profile}
+    alt="Profile"
+    className="w-150 md:w-200"
+  />
+</div>
+
       <div style={{ position: "absolute", top: 40, right: 40, fontFamily: "var(--font-mono)", color: "var(--green-dim)", fontSize: 11, lineHeight: 1.5, userSelect: "none", display: "none" }} className="sm:block">
         {`> STATUS: ONLINE`}<br/>
         {`> LOCATION: ID / JKT`}<br/>
@@ -684,7 +688,7 @@ function Certificate() {
               alignItems: "center",
               gap: 8,
             }}>
-              <span>✓</span> {c.label}
+           {c.label}
             </div>
           </div>
         ))}
@@ -1092,7 +1096,7 @@ function Footer() {
       <div style={{ height: 1, background: "var(--border)", maxWidth: 200, margin: "0 auto 20px" }} />
 
       <p style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--green-dim)", letterSpacing: "0.1em" }}>
-        © {year} ANDIKA CAHYA RAHMAN — ALL RIGHTS RESERVED
+        © {year} ANDIKA_CAHYA_RAHMAN — ALL RIGHTS RESERVED
       </p>
     </footer>
   );
