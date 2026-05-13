@@ -1,174 +1,1105 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
 } from "@headlessui/react";
-
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/16/solid";
-import { useEffect, useState } from "react";
-import linux from './assets/logo/linux-svgrepo-com.svg';
-import ts from "./assets/ts.svg";
-import portfolio5 from "./assets/portfolio5.png";
-import sakusiswa from "./assets/sakusiswa.png";
-import ctf from './assets/logo/imagesctf.jpg';
-import bootstrap from "./assets/bootstrap.png";
-import php from "./assets/logo/php-svgrepo-com.svg";
-import python from "./assets/logo/python-svgrepo-com.svg";
-import tailwind from "./assets/logo/tailwind-svgrepo-com.svg";
-import unity from "./assets/gambar43.png";
-import react from "./assets/logo/react-svgrepo-com.svg";
-import figma from "./assets/logo/figma-svgrepo-com.svg";
-import js from "./assets/logo/js-svgrepo-com.svg";
-import html from "./assets/logo/html-5-svgrepo-com(1).svg";
-import css from "./assets/logo/css-3-svgrepo-com.svg";
-import pelatihan from "./assets/pelatihan.jpg";
+import { useEffect, useState, useRef } from "react";
+
+import linux        from "./assets/logo/linux-svgrepo-com.svg";
+import ts           from "./assets/ts.svg";
+import portfolio5   from "./assets/portfolio5.png";
+import sakusiswa    from "./assets/sakusiswa.png";
+import ctf          from "./assets/logo/imagesctf.jpg";
+import bootstrap    from "./assets/bootstrap.png";
+import php          from "./assets/logo/php-svgrepo-com.svg";
+import python       from "./assets/logo/python-svgrepo-com.svg";
+import tailwind     from "./assets/logo/tailwind-svgrepo-com.svg";
+import unity        from "./assets/gambar43.png";
+import react        from "./assets/logo/react-svgrepo-com.svg";
+import figma        from "./assets/logo/figma-svgrepo-com.svg";
+import js           from "./assets/logo/js-svgrepo-com.svg";
+import html         from "./assets/logo/html-5-svgrepo-com(1).svg";
+import css          from "./assets/logo/css-3-svgrepo-com.svg";
+import pelatihan    from "./assets/pelatihan.jpg";
 import linkedinmicrosoft from "./assets/linkedinmicrosoft.png";
-import cisco from "./assets/cisco.png";
-import mysql from "./assets/logo/mysql-logo-svgrepo-com.svg";
-import photoshop from "./assets/logo/photoshop-cc-logo-svgrepo-com.svg";
-import canva from "./assets/canva.png";
-import laravel from "./assets/logo/laravel-svgrepo-com.svg";
-import lightroom from "./assets/logo/adobe-lightroom-svgrepo-com.svg";
+import cisco        from "./assets/cisco.png";
+import mysql        from "./assets/logo/mysql-logo-svgrepo-com.svg";
+import photoshop    from "./assets/logo/photoshop-cc-logo-svgrepo-com.svg";
+import canva        from "./assets/canva.png";
+import laravel      from "./assets/logo/laravel-svgrepo-com.svg";
+import lightroom    from "./assets/logo/adobe-lightroom-svgrepo-com.svg";
 import displaygambar from "./assets/display.png";
-import flappymonkey from './assets/gambar2.jpg';
-import perpus from './assets/gambar2.png';
-import cv from './assets/CV - Andika Cahya Rahman.pdf';
-import git from './assets/gittt.png';
-import github from './assets/github.webp';
-import robloxstudio from './assets/rstudio.png';
-import bgVideo from './assets/background.mp4';
+import flappymonkey from "./assets/gambar2.jpg";
+import perpus       from "./assets/gambar2.png";
+import cv           from "./assets/CV - Andika Cahya Rahman.pdf";
+import git          from "./assets/gittt.png";
+import github       from "./assets/github.webp";
+import robloxstudio from "./assets/rstudio.png";
 
+const GLOBAL_CSS = `
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap');
 
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-function LoadingScreen({fadeout}: {fadeout: boolean}) {
+  :root {
+    --bg:        #030b03;
+    --bg2:       #070f07;
+    --bg3:       #0a140a;
+    --surface:   #0e1a0e;
+    --border:    #1a3a1a;
+    --border2:   #245a24;
+    --green:     #00ff41;
+    --green2:    #00cc33;
+    --green3:    #009922;
+    --green-dim: #004d14;
+    --amber:     #ffb700;
+    --text:      #b8d4b8;
+    --text2:     #6e9a6e;
+    --font-mono: 'Share Tech Mono', monospace;
+    --font-body: 'Rajdhani', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,255,65,0.015) 2px,
+      rgba(0,255,65,0.015) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--green3); border-radius: 2px; }
+
+  /* section fade-in on scroll */
+  .fade-section {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* reusable */
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--green3);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: var(--font-body);
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 0.02em;
+  }
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: var(--green3);
+    margin: 16px auto 40px;
+    position: relative;
+  }
+  .divider::after {
+    content: '';
+    position: absolute;
+    left: 60px;
+    top: 0;
+    width: 20px;
+    height: 2px;
+    background: var(--green-dim);
+  }
+
+  /* glow text */
+  .glow {
+    text-shadow: 0 0 20px rgba(0,255,65,0.5), 0 0 60px rgba(0,255,65,0.2);
+  }
+`;
+
+function StyleInjector() {
+  useEffect(() => {
+    const tag = document.createElement("style");
+    tag.innerHTML = GLOBAL_CSS;
+    document.head.appendChild(tag);
+    return () => {
+      document.head.removeChild(tag);
+    };
+  }, []);
+  return null;
+}
+
+function useFadeIn(ref: React.RefObject<HTMLElement | null>) {
+  useEffect(() => {
+    if (!ref.current) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          obs.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+}
+
+function LoadingScreen({ fadeout }: { fadeout: boolean }) {
+  const [dots, setDots] = useState<string>("");
+  const [lines, setLines] = useState<string[]>([]);
+  const boot = [
+    "Initializing secure environment...",
+    "Loading encrypted modules...",
+    "Establishing connection...",
+    "Authenticating identity...",
+    "Access granted.",
+  ];
+
+  useEffect(() => {
+    let i = 0;
+    const id = setInterval(() => {
+      if (i < boot.length) setLines((p) => [...p, boot[i++]]);
+      else clearInterval(id);
+    }, 600);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(() => setDots((d) => (d.length >= 3 ? "" : d + ".")), 800);
+    return () => clearInterval(id);
+  }, []);
+
   return (
-    <>
-      <div
-        className={`min-h-screen bg-black inset-0 place-content-center transition-opacity duration-1000 ease-in ${fadeout ? "opacity-0" : "opacity-100"}`}
-      >
-        <h1 className="text-center font-semibold sm:text-4xl text-yellow-500">
-          Welcome To My Portfolio
-        </h1>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "#030b03",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 32,
+        transition: "opacity 1s ease",
+        opacity: fadeout ? 0 : 1,
+        fontFamily: "'Share Tech Mono', monospace",
+      }}
+    >
+      {/* ASCII border */}
+      <div style={{ color: "#00cc33", fontSize: 13, lineHeight: 1.3, userSelect: "none" }}>
+        {`╔════════════════════════════════╗`}<br/>
+        {`║   ANDIKA_CAHYA_RAHMAN.SYS v2.0    ║`}<br/>
+        {`╚════════════════════════════════╝`}
       </div>
-    </>
+
+      <div style={{ width: 340 }}>
+        {lines.map((l, i) => (
+          <div key={i} style={{ color: i === lines.length - 1 ? "#00ff41" : "#4d8a4d", fontSize: 13, marginBottom: 6 }}>
+            <span style={{ color: "#00cc33" }}>{">"} </span>{l}
+          </div>
+        ))}
+        {lines.length < boot.length && (
+          <div style={{ color: "#00cc33", fontSize: 13 }}>{">"} {dots}</div>
+        )}
+      </div>
+
+      <div style={{ width: 340, height: 4, background: "#0a1a0a", borderRadius: 2, overflow: "hidden" }}>
+        <div
+          style={{
+            height: "100%",
+            background: "linear-gradient(90deg, #003d10, #00ff41)",
+            width: `${(lines.length / boot.length) * 100}%`,
+            transition: "width 0.4s ease",
+            boxShadow: "0 0 8px #00ff41",
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+const NAV_LINKS = ["Home", "About", "Certificate", "Skills", "Project", "Contact"];
+
+function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", fn);
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
+
+  const linkStyle = {
+    fontFamily: "var(--font-mono)",
+    fontSize: 12,
+    color: "var(--text2)",
+    textDecoration: "none",
+    letterSpacing: "0.08em",
+    padding: "6px 12px",
+    border: "1px solid transparent",
+    borderRadius: 2,
+    transition: "all 0.2s",
+  };
+
+  return (
+    <Disclosure
+      as="nav"
+      style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 100,
+        background: scrolled ? "rgba(3,11,3,0.95)" : "transparent",
+        borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
+        backdropFilter: "blur(12px)",
+        transition: "all 0.3s",
+      }}
+    >
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ height: 60, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          {/* Logo */}
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <span style={{ fontFamily: "var(--font-mono)", color: "var(--green)", fontSize: 13 }}>{"["}</span>
+            <span style={{ fontFamily: "var(--font-body)", fontWeight: 700, color: "var(--green)", fontSize: 15, letterSpacing: "0.05em" }}>
+              ANDIKA_CAHYA_RAHMAN
+            </span>
+            <span style={{ fontFamily: "var(--font-mono)", color: "var(--green)", fontSize: 13 }}>{"]"}</span>
+          </div>
+
+          {/* Desktop links */}
+          <div className="hidden sm:flex" style={{ gap: 4, display: "flex" }}>
+            {NAV_LINKS.map((l) => (
+              <a
+                key={l}
+                href={`#${l.toLowerCase()}`}
+                style={linkStyle}
+                onMouseEnter={(e) => {
+                  const target = e.target as HTMLElement;
+                  target.style.color = "var(--green)";
+                  target.style.borderColor = "var(--green3)";
+                  target.style.background = "rgba(0,255,65,0.05)";
+                }}
+                onMouseLeave={(e) => {
+                  const target = e.target as HTMLElement;
+                  target.style.color = "var(--text2)";
+                  target.style.borderColor = "transparent";
+                  target.style.background = "transparent";
+                }}
+              >
+                ./{l}
+              </a>
+            ))}
+          </div>
+
+          {/* Mobile hamburger */}
+          <DisclosureButton
+            className="sm:hidden"
+            style={{ background: "none", border: "none", cursor: "pointer", color: "var(--green)" }}
+          >
+            {({ open }) =>
+              open
+                ? <XMarkIcon style={{ width: 22, height: 22 }} />
+                : <Bars3Icon style={{ width: 22, height: 22 }} />
+            }
+          </DisclosureButton>
+        </div>
+      </div>
+
+      <DisclosurePanel>
+        <div style={{ borderTop: "1px solid var(--border)", padding: "12px 24px", background: "rgba(3,11,3,0.98)" }}>
+          {NAV_LINKS.map((l) => (
+            <DisclosureButton key={l} as="a" href={`#${l.toLowerCase()}`}
+              style={{ display: "block", padding: "10px 0", fontFamily: "var(--font-mono)", fontSize: 13, color: "var(--green2)", textDecoration: "none", borderBottom: "1px solid var(--border)" }}
+            >
+              <span style={{ color: "var(--green3)" }}> </span>./{l}
+            </DisclosureButton>
+          ))}
+        </div>
+      </DisclosurePanel>
+    </Disclosure>
+  );
+}
+
+function Typewriter({ text, speed = 80 }: { text: string; speed?: number }) {
+  const [out, setOut] = useState("");
+  const [idx, setIdx] = useState(0);
+  const [mode, setMode] = useState<"typing" | "pausing" | "deleting">("typing");
+
+  useEffect(() => {
+    let t: number | undefined;
+
+    const jitter = Math.floor(Math.random() * 35);
+    const base = Math.max(10, speed + jitter);
+    const extraPause = text[idx] === " " ? 60 : 0;
+
+    if (mode === "typing") {
+      if (idx >= text.length) {
+        setMode("pausing");
+        return;
+      }
+
+      t = window.setTimeout(() => {
+        setOut((p) => p + text[idx]);
+        setIdx((i) => i + 1);
+      }, base + extraPause);
+    }
+
+    if (mode === "pausing") {
+      // jeda setelah selesai mengetik
+      t = window.setTimeout(() => {
+        setMode("deleting");
+      }, 900);
+    }
+
+    if (mode === "deleting") {
+      if (idx <= 0) {
+        // mulai lagi typing dari awal
+        setMode("typing");
+        setOut("");
+        setIdx(0);
+        return;
+      }
+
+      t = window.setTimeout(() => {
+        setOut((p) => p.slice(0, -1));
+        setIdx((i) => i - 1);
+      }, Math.max(15, base * 0.55));
+    }
+
+    return () => {
+      if (t) window.clearTimeout(t);
+    };
+  }, [idx, text, speed, mode]);
+
+  const caretKeyframes = `
+    @keyframes caretBlink {
+      0%, 45% { opacity: 1; }
+      50% { opacity: 0; }
+      55%, 100% { opacity: 1; }
+    }
+    @keyframes caretNudge {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(0.5px); }
+    }
+  `;
+
+  return (
+    <span>
+      {out}
+      <span
+        aria-hidden
+        style={{
+          display: "inline-block",
+          width: 2,
+          height: "1em",
+          background: "var(--green)",
+          marginLeft: 3,
+          verticalAlign: "baseline",
+          animation: "caretBlink 0.9s step-start infinite, caretNudge 0.45s ease-in-out infinite",
+          boxShadow: "0 0 12px rgba(0,255,65,0.25)",
+        }}
+      />
+      <style>{caretKeyframes}</style>
+    </span>
+  );
+}
+
+function Home() {
+  const [show, setShow] = useState(false);
+  useEffect(() => { setTimeout(() => setShow(true), 300); }, []);
+
+  return (
+    <section
+      id="home"
+      style={{
+        minHeight: "92vh",
+        display: "flex",
+        alignItems: "center",
+        padding: "60px 24px",
+        maxWidth: 1200,
+        margin: "0 auto",
+        position: "relative",
+      }}
+    >
+      {/* background grid */}
+      <div style={{
+        position: "absolute", inset: 0,
+        backgroundImage: `
+          linear-gradient(rgba(0,255,65,0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0,255,65,0.03) 1px, transparent 1px)
+        `,
+        backgroundSize: "40px 40px",
+        pointerEvents: "none",
+      }} />
+
+      <div style={{ position: "relative", maxWidth: 680 }}>
+        <div className="section-label" style={{ marginBottom: 16, animationDelay: "0.2s" }}>
+        </div>
+
+        <div
+          style={{
+            fontFamily: "var(--font-mono)",
+            color: "var(--green)",
+            fontSize: "clamp(36px, 6vw, 64px)",
+            fontWeight: 700,
+            lineHeight: 1.1,
+            marginBottom: 16,
+            opacity: show ? 1 : 0,
+            transition: "opacity 0.6s ease",
+          }}
+          className="glow"
+        >
+          {show && <Typewriter text="Hi, I'm Andika" speed={70} />}
+        </div>
+
+        <div style={{
+          fontFamily: "var(--font-body)",
+          fontSize: "clamp(18px, 2.5vw, 24px)",
+          color: "var(--green2)",
+          fontWeight: 600,
+          letterSpacing: "0.08em",
+          marginBottom: 20,
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+        }}>
+          Software Engineering Student
+        </div>
+
+        <p style={{ color: "var(--text)", lineHeight: 1.8, fontSize: 16, maxWidth: 560, marginBottom: 36 }}>
+          A vocational school student passionate about web development, application engineering,
+          and information security. Always hunting for the next challenge.
+        </p>
+
+        <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+          <a
+            href={cv}
+            download
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: 13,
+              color: "var(--green)",
+              border: "1px solid var(--green3)",
+              padding: "10px 24px",
+              textDecoration: "none",
+              borderRadius: 2,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              transition: "all 0.2s",
+              background: "rgba(0,255,65,0.05)",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(0,255,65,0.12)"; e.currentTarget.style.boxShadow = "0 0 16px rgba(0,255,65,0.2)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(0,255,65,0.05)"; e.currentTarget.style.boxShadow = "none"; }}
+          >
+            <span>↓</span> ./download_cv
+          </a>
+          <a
+            href="#aboutme"
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: 13,
+              color: "var(--text2)",
+              border: "1px solid var(--border2)",
+              padding: "10px 24px",
+              textDecoration: "none",
+              borderRadius: 2,
+              transition: "all 0.2s",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = "var(--green)"; e.currentTarget.style.borderColor = "var(--green3)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text2)"; e.currentTarget.style.borderColor = "var(--border2)"; }}
+          >
+            ./about_me
+          </a>
+        </div>
+
+        <div style={{ display: "flex", gap: 20, marginTop: 48 }}>
+          {[
+            { href: "https://www.linkedin.com/in/andika-cahya-rahman-a6704b2a2/", icon: "fab fa-linkedin" },
+            { href: "https://www.instagram.com/kuroshii274._", icon: "fab fa-instagram" },
+            { href: "https://github.com/kuroshii251", icon: "fab fa-github" },
+          ].map((s) => (
+            <a key={s.href} href={s.href} target="_blank" rel="noopener noreferrer"
+              style={{ color: "var(--text2)", fontSize: 20, transition: "all 0.2s" }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = "var(--green)"; e.currentTarget.style.textShadow = "0 0 12px rgba(0,255,65,0.5)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text2)"; e.currentTarget.style.textShadow = "none"; }}
+            >
+              <i className={s.icon} />
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* Corner decoration */}
+      <div style={{ position: "absolute", top: 40, right: 40, fontFamily: "var(--font-mono)", color: "var(--green-dim)", fontSize: 11, lineHeight: 1.5, userSelect: "none", display: "none" }} className="sm:block">
+        {`> STATUS: ONLINE`}<br/>
+        {`> LOCATION: ID / JKT`}<br/>
+        {`> MODE: OPEN_TO_WORK`}
+      </div>
+    </section>
+  );
+}
+
+function Section({ id, label, title, children, style = {} }: { id: string; label: string; title: string; children: React.ReactNode; style?: React.CSSProperties }) {
+  const ref = useRef<HTMLElement>(null);
+  useFadeIn(ref);
+
+  return (
+    <section
+      id={id}
+      ref={ref}
+      className="fade-section"
+      style={{
+        padding: "100px 24px",
+        maxWidth: 1200,
+        margin: "0 auto",
+        ...style,
+      }}
+    >
+      <div style={{ textAlign: "center", marginBottom: 56 }}>
+        <div className="section-label">{label}</div>
+        <h2 className="section-title glow">{title}</h2>
+        <div className="divider" />
+      </div>
+      {children}
+    </section>
+  );
+}
+
+function AboutMe() {
+  return (
+    <Section id="aboutme" label="" title="About Me">
+      <div style={{
+        maxWidth: 800,
+        margin: "0 auto",
+        background: "var(--surface)",
+        border: "1px solid var(--border)",
+        borderRadius: 4,
+        padding: "36px 40px",
+        position: "relative",
+        overflow: "hidden",
+      }}>
+        {/* top bar */}
+        <div style={{ display: "flex", gap: 6, marginBottom: 24 }}>
+          {["#ff5f57","#febc2e","#28c840"].map((c, i) => (
+            <div key={i} style={{ width: 12, height: 12, borderRadius: "50%", background: c, opacity: 0.7 }} />
+          ))}
+        </div>
+
+        <div style={{ fontFamily: "var(--font-mono)", fontSize: 13, lineHeight: 2 }}>
+          <div><span style={{ color: "var(--green3)" }}>$ cat</span> <span style={{ color: "var(--text2)" }}>profile.txt</span></div>
+          <br/>
+          <div style={{ color: "var(--text)", fontSize: 16, fontFamily: "var(--font-body)", lineHeight: 1.8 }}>
+            My name is <span style={{ color: "var(--green)", fontWeight: 600 }}>Andika Cahya Rahman</span>. I have a strong
+            interest in programming and computers. I enjoy learning new things — academic and
+            non-academic alike — especially areas I haven't yet mastered.
+          </div>
+          <br/>
+          <div style={{ color: "var(--text)", fontSize: 16, fontFamily: "var(--font-body)", lineHeight: 1.8 }}>
+            I'm passionate about solving problems effectively in every assignment or project I take on,
+            and I continuously seek to sharpen my skills in both development and security.
+          </div>
+          <br/>
+          <div><span style={{ color: "var(--green3)" }}>$ _</span></div>
+        </div>
+
+        {/* decorative corner */}
+        <div style={{
+          position: "absolute", bottom: 0, right: 0,
+          width: 80, height: 80,
+          borderTop: "1px solid var(--border2)",
+          borderLeft: "1px solid var(--border2)",
+          pointerEvents: "none",
+        }} />
+      </div>
+    </Section>
+  );
+}
+
+function Certificate() {
+  const certs = [
+    { src: cisco,            label: "Cisco" },
+    { src: linkedinmicrosoft, label: "LinkedIn × Microsoft" },
+    { src: pelatihan,        label: "Pelatihan" },
+  ];
+
+  return (
+    <Section id="certificate" label="" title="Certificates">
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
+        {certs.map((c) => (
+          <div key={c.label}
+            style={{
+              background: "var(--surface)",
+              border: "1px solid var(--border)",
+              borderRadius: 4,
+              overflow: "hidden",
+              transition: "all 0.3s",
+              cursor: "default",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = "var(--green3)";
+              e.currentTarget.style.boxShadow = "0 0 20px rgba(0,255,65,0.1)";
+              e.currentTarget.style.transform = "translateY(-4px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = "var(--border)";
+              e.currentTarget.style.boxShadow = "none";
+              e.currentTarget.style.transform = "none";
+            }}
+          >
+            <img src={c.src} alt={c.label} style={{ width: "100%", display: "block" }} />
+            <div style={{
+              padding: "12px 16px",
+              fontFamily: "var(--font-mono)",
+              fontSize: 12,
+              color: "var(--green3)",
+              borderTop: "1px solid var(--border)",
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+            }}>
+              <span>✓</span> {c.label}
+            </div>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function SkillCard({ src, label }: { src: string; label: string }) {
+  return (
+    <div
+      style={{
+        background: "var(--surface)",
+        border: "1px solid var(--border)",
+        borderRadius: 4,
+        padding: "20px 16px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 12,
+        transition: "all 0.25s",
+        cursor: "default",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = "var(--green3)";
+        e.currentTarget.style.boxShadow = "0 0 16px rgba(0,255,65,0.12), inset 0 0 20px rgba(0,255,65,0.03)";
+        e.currentTarget.style.transform = "translateY(-4px)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = "var(--border)";
+        e.currentTarget.style.boxShadow = "none";
+        e.currentTarget.style.transform = "none";
+      }}
+    >
+      <img src={src} alt={label} style={{ width: 44, height: 44, objectFit: "contain", filter: "brightness(0.9)" }} />
+      <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text2)", letterSpacing: "0.05em" }}>
+        {label}
+      </span>
+    </div>
+  );
+}
+
+function SkillGroup({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div style={{ marginBottom: 48 }}>
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 12,
+        marginBottom: 24,
+      }}>
+        <div style={{ width: 6, height: 6, background: "var(--green)", borderRadius: "50%" }} />
+        <span style={{ fontFamily: "var(--font-mono)", fontSize: 13, color: "var(--green2)", letterSpacing: "0.1em" }}>
+          {title.toUpperCase()}
+        </span>
+        <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(110px, 1fr))", gap: 12 }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function Skills() {
+  return (
+    <Section id="skills" label="" title="Skills">
+      <SkillGroup title="Software Development">
+        <SkillCard src={html}      label="HTML" />
+        <SkillCard src={css}       label="CSS" />
+        <SkillCard src={bootstrap} label="Bootstrap" />
+        <SkillCard src={tailwind}  label="Tailwind" />
+        <SkillCard src={js}        label="JavaScript" />
+        <SkillCard src={react}     label="React JS" />
+        <SkillCard src={ts}        label="TypeScript" />
+        <SkillCard src={php}       label="PHP" />
+        <SkillCard src={laravel}   label="Laravel" />
+        <SkillCard src={mysql}     label="MySQL" />
+        <SkillCard src={python}    label="Python" />
+        <SkillCard src={git}       label="Git" />
+        <SkillCard src={github}    label="GitHub" />
+      </SkillGroup>
+
+      <SkillGroup title="Cyber Security">
+        <SkillCard src={linux}     label="Linux" />
+        <SkillCard src={ctf}       label="CTF" />
+      </SkillGroup>
+
+      <SkillGroup title="Game Development">
+        <SkillCard src={unity}       label="Unity" />
+        <SkillCard src={robloxstudio} label="Roblox Studio" />
+      </SkillGroup>
+
+      <SkillGroup title="Design & Edit">
+        <SkillCard src={figma}      label="Figma" />
+        <SkillCard src={canva}      label="Canva" />
+        <SkillCard src={photoshop}  label="Photoshop" />
+        <SkillCard src={lightroom}  label="Lightroom" />
+      </SkillGroup>
+    </Section>
+  );
+}
+
+function ProjectCard({ src, title, desc, href }: { src: string; title: string; desc: string; href?: string }) {
+  return (
+    <div
+      style={{
+        background: "var(--surface)",
+        border: "1px solid var(--border)",
+        borderRadius: 4,
+        overflow: "hidden",
+        transition: "all 0.3s",
+        display: "flex",
+        flexDirection: "column",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = "var(--green3)";
+        e.currentTarget.style.boxShadow = "0 8px 32px rgba(0,255,65,0.08)";
+        e.currentTarget.style.transform = "translateY(-6px)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = "var(--border)";
+        e.currentTarget.style.boxShadow = "none";
+        e.currentTarget.style.transform = "none";
+      }}
+    >
+      <div style={{ height: 200, overflow: "hidden", position: "relative" }}>
+        <img src={src} alt={title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s" }}
+          onMouseEnter={(e) => { (e.target as HTMLElement).style.transform = "scale(1.06)"; }}
+          onMouseLeave={(e) => { (e.target as HTMLElement).style.transform = "scale(1)"; }}
+        />
+        <div style={{
+          position: "absolute", inset: 0,
+          background: "linear-gradient(to bottom, transparent 40%, rgba(3,11,3,0.8))",
+        }} />
+      </div>
+
+      <div style={{ padding: "20px 24px", flex: 1, display: "flex", flexDirection: "column", gap: 12 }}>
+        <h3 style={{
+          fontFamily: "var(--font-body)",
+          fontWeight: 700,
+          fontSize: 18,
+          color: "var(--green)",
+          letterSpacing: "0.03em",
+        }}>
+          {title}
+        </h3>
+        <p style={{ color: "var(--text2)", fontSize: 14, lineHeight: 1.7, flex: 1 }}>{desc}</p>
+        {href && (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              fontFamily: "var(--font-mono)",
+              fontSize: 12,
+              color: "var(--green3)",
+              textDecoration: "none",
+              border: "1px solid var(--border2)",
+              padding: "6px 14px",
+              borderRadius: 2,
+              alignSelf: "flex-start",
+              transition: "all 0.2s",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = "var(--green)"; e.currentTarget.style.borderColor = "var(--green3)"; e.currentTarget.style.background = "rgba(0,255,65,0.06)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = "var(--green3)"; e.currentTarget.style.borderColor = "var(--border2)"; e.currentTarget.style.background = "transparent"; }}
+          >
+            ./view_project ↗
+          </a>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function Project() {
+  const projects = [
+    {
+      src: displaygambar,
+      title: "Gym Rex",
+      desc: "A complete gym movement guide app with step-by-step instructions and tips. Built as my vocational final project.",
+      href: "https://drive.google.com/file/d/1Ebw4BBCaJQ_F_15VdZ5YrdOJtqHUJjLB/view",
+    },
+    {
+      src: flappymonkey,
+      title: "Flappy Monkey",
+      desc: "Inspired by Flappy Bird — players score by navigating through pipe obstacles. Vocational final project in Unity.",
+      href: "https://drive.google.com/file/d/1OD4UT5H0jQQZN6uLEM0KvRud4Me_35RB/view",
+    },
+    {
+      src: sakusiswa,
+      title: "Saku Siswa",
+      desc: "A student financial management system to help students track and monitor their daily expenses.",
+      href: "https://drive.google.com/file/d/1OD4UT5H0jQQZN6uLEM0KvRud4Me_35RB/view",
+    },
+    {
+      src: perpus,
+      title: "E-Library",
+      desc: "An online library platform allowing users to read and borrow books digitally without visiting physically.",
+    },
+    {
+      src: portfolio5,
+      title: "CharacterBot",
+      desc: "A web app where users can chat directly with their favorite anime characters powered by AI.",
+    },
+  ];
+
+  return (
+    <Section id="project" label="" title="Projects">
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 20 }}>
+        {projects.map((p) => <ProjectCard key={p.title} {...p} />)}
+      </div>
+    </Section>
+  );
+}
+
+function Contact() {
+  const [status, setStatus] = useState("idle");
+  const [form, setForm] = useState({ email: "", message: "" });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("sending");
+    try {
+      const res = await fetch("https://formspree.io/f/myzpqran", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(form),
+      });
+      setStatus(res.ok ? "sent" : "error");
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  const inputStyle = {
+    width: "100%",
+    background: "var(--bg3)",
+    border: "1px solid var(--border)",
+    borderRadius: 2,
+    padding: "10px 14px",
+    color: "var(--text)",
+    fontFamily: "var(--font-mono)",
+    fontSize: 13,
+    outline: "none",
+    transition: "border-color 0.2s",
+  };
+
+
+  return (
+    <Section id="contact" label="" title="Contact">
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 32, maxWidth: 900, margin: "0 auto" }}>
+        {/* Form */}
+        <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 4, padding: 32 }}>
+          <div style={{ display: "flex", gap: 6, marginBottom: 24 }}>
+            {["#ff5f57","#febc2e","#28c840"].map((c, i) => (
+              <div key={i} style={{ width: 10, height: 10, borderRadius: "50%", background: c, opacity: 0.6 }} />
+            ))}
+          </div>
+
+          {status === "sent" ? (
+            <div style={{ fontFamily: "var(--font-mono)", color: "var(--green)", lineHeight: 2, fontSize: 13 }}>
+              <div>{">"} Message received. ✓</div>
+              <div>{">"} I'll get back to you soon.</div>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+              <div>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="andika@example.com"
+                  required
+                  value={form.email}
+                  onChange={handleChange}
+                  style={inputStyle}
+                  onFocus={(e) => { e.target.style.borderColor = "var(--green3)"; }}
+                  onBlur={(e) => { e.target.style.borderColor = "var(--border)"; }}
+                />
+              </div>
+              <div>
+                <textarea
+                  name="message"
+                  placeholder="Type your message..."
+                  required
+                  value={form.message}
+                  onChange={handleChange}
+                  rows={5}
+                  style={{ ...inputStyle, resize: "vertical" }}
+                  onFocus={(e) => { e.target.style.borderColor = "var(--green3)"; }}
+                  onBlur={(e) => { e.target.style.borderColor = "var(--border)"; }}
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                style={{
+                  background: "transparent",
+                  border: "1px solid var(--green3)",
+                  color: "var(--green)",
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 13,
+                  padding: "10px 24px",
+                  cursor: "pointer",
+                  borderRadius: 2,
+                  transition: "all 0.2s",
+                  letterSpacing: "0.1em",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(0,255,65,0.08)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
+              >
+                {status === "sending" ? "SENDING..." : "[ SEND_MESSAGE ]"}
+              </button>
+              {status === "error" && (
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "#ff4444" }}>
+                  Error: failed to send. Try again.
+                </span>
+              )}
+            </form>
+          )}
+        </div>
+
+        {/* Info */}
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 28 }}>
+          {[
+            { icon: "fab fa-whatsapp", label: "WHATSAPP", value: "+62 887-1729-638" },
+            { icon: "fas fa-envelope",  label: "EMAIL",    value: "andikacrwork@gmail.com" },
+            { icon: "fas fa-map-marker-alt", label: "LOCATION", value: "East Jakarta, Indonesia" },
+          ].map((item) => (
+            <div key={item.label} style={{ display: "flex", alignItems: "flex-start", gap: 16 }}>
+              <div style={{
+                width: 40, height: 40, border: "1px solid var(--border2)",
+                borderRadius: 2, display: "flex", alignItems: "center", justifyContent: "center",
+                color: "var(--green3)", fontSize: 16, flexShrink: 0,
+                background: "rgba(0,255,65,0.03)",
+              }}>
+                <i className={item.icon} />
+              </div>
+              <div>
+                <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--green3)", letterSpacing: "0.15em", marginBottom: 4 }}>
+                   {item.label}
+                </div>
+                <div style={{ color: "var(--text)", fontFamily: "var(--font-body)", fontSize: 15 }}>{item.value}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+function Footer() {
+  const year = new Date().getFullYear();
+  return (
+    <footer style={{
+      borderTop: "1px solid var(--border)",
+      padding: "48px 24px",
+      textAlign: "center",
+    }}>
+      <div style={{
+        fontFamily: "var(--font-mono)",
+        color: "var(--green)",
+        fontSize: 18,
+        fontWeight: 700,
+        letterSpacing: "0.1em",
+        marginBottom: 24,
+      }} className="glow">
+        ANDIKA_CAHYA_RAHMAN
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "center", gap: 32, marginBottom: 24, flexWrap: "wrap" }}>
+        {NAV_LINKS.map((l) => (
+          <a key={l} href={`#${l.toLowerCase()}`}
+            style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--text2)", textDecoration: "none", letterSpacing: "0.08em", transition: "color 0.2s" }}
+            onMouseEnter={(e) => { (e.target as HTMLElement).style.color = "var(--green)"; }}
+            onMouseLeave={(e) => { (e.target as HTMLElement).style.color = "var(--text2)"; }}
+          >
+            ./{l.toLowerCase()}
+          </a>
+        ))}
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "center", gap: 20, marginBottom: 32 }}>
+        {[
+          { href: "https://www.linkedin.com/in/andika-cahya-rahman-a6704b2a2/", icon: "fab fa-linkedin" },
+          { href: "https://www.instagram.com/kuroshii274._", icon: "fab fa-instagram" },
+          { href: "https://github.com/kuroshii251", icon: "fab fa-github" },
+        ].map((s) => (
+          <a key={s.href} href={s.href} target="_blank" rel="noopener noreferrer"
+            style={{ color: "var(--text2)", fontSize: 18, transition: "all 0.2s" }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = "var(--green)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text2)"; }}
+          >
+            <i className={s.icon} />
+          </a>
+        ))}
+      </div>
+
+      <div style={{ height: 1, background: "var(--border)", maxWidth: 200, margin: "0 auto 20px" }} />
+
+      <p style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--green-dim)", letterSpacing: "0.1em" }}>
+        © {year} ANDIKA CAHYA RAHMAN — ALL RIGHTS RESERVED
+      </p>
+    </footer>
   );
 }
 
 function Main() {
   return (
     <>
-      <Disclosure
-        as="nav"
-        className="relative bg-black dark:bg-black-800/50 sm:p-4 dark:after:pointer-events-none dark:after:absolute dark:after:inset-x-0 dark:after:bottom-0 dark:after:h-px dark:after:bg-white/10"
-      >
-        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-          <div className="relative flex h-16 items-center justify-between">
-            <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
-              <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-yellow-500 hover:bg-white/5 s:outline-2 focus:-outline-offset-1 focus:outline-indigo-500">
-                <span className="absolute -inset-0.5" />
-                <span className="sr-only">Open main menu</span>
-                <Bars3Icon
-                  aria-hidden="true"
-                  className="block size-6 group-data-open:hidden"
-                />
-                <XMarkIcon
-                  aria-hidden="true"
-                  className="hidden size-6 group-data-open:block"
-                />
-              </DisclosureButton>
-            </div>
-            <div className="flex flex-1 items-start px-3 text-yellow-500 justify-start sm:items-stretch sm:justify-start">
-              <div className="flex shrink-0 items-center">
-                <h1 className="sm:text-xl text-yellow-500">Andika Cahya Rahman</h1>
-              </div>
-              <div className="hidden sm:ml-6 sm:block">
-                <div className="flex space-x-4">
-                  <a
-                    href="#home"
-                    className="rounded-md px-3 py-2 text-sm  hover:border-1  hover:border-yellow-500"
-                  >
-                    Home
-                  </a>
-                  <a
-                    href="#aboutme"
-                    className="rounded-md px-3 py-2 text-sm  hover:border-1  hover:border-yellow-500"
-                  >
-                    About
-                  </a>
-                  <a
-                    href="#certificate"
-                    className="rounded-md px-3 py-2 text-sm    hover:border-1 hover:border-yellow-500"
-                  >
-                    Certificate
-                  </a>
-                   <a
-                    href="#skills"
-                    className="rounded-md px-3 py-2 text-sm hover:border-1  hover:border-yellow-500"
-                  >
-                    Skills
-                  </a>
-                  <a
-                    href="#project"
-                    className="rounded-md px-3 py-2 text-sm  hover:border-1  hover:border-yellow-500"
-                  >
-                    Project
-                  </a>
-                  <a
-                    href="#contact"
-                    className="rounded-md px-3 py-2 text-sm  hover:border-1 hover:border-yellow-500"
-                  >
-                    Contact
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <DisclosurePanel className="sm:hidden">
-          <div className="space-y-1 px-2 pt-2 pb-3">
-            <DisclosureButton>
-              <a
-                href="#home"
-                className="block rounded-md px-3 text-yellow-500 hover:border-yellow-500 font-bold py-2 hover:border-1 "
-              >
-              ./Home
-              </a>
-              <a
-                href="#aboutme"
-                className="block rounded-md px-3 text-yellow-500 hover:border-yellow-500 font-bold py-2 text-base hover:border-1 "
-              >
-              ./About
-              </a>
-              <a
-                href="#certificate"
-                className="block rounded-md px-3 text-yellow-500 hover:border-yellow-500 hover:border-1 font-bold py-2 text-base  "
-              >
-              ./Certificate
-              </a>
-               <a
-                href="#skills"
-                className="block rounded-md px-3 text-yellow-500 font-bold py-2 text-base hover:border-1 hover:border-yellow-500"
-              >
-                ./Skills
-              </a>
-              <a
-                href="#project"
-                className="block rounded-md px-3 text-yellow-500  font-bold py-2 text-base hover:border-1 hover:border-yellow-500 "
-              >
-              ./Project
-              </a>
-              <a
-                href="#contact"
-                className="block rounded-md px-3 text-yellow-500  font-bold py-2 text-base hover:border-1 hover:border-yellow-500 "
-              >
-              ./Contact
-              </a>
-            </DisclosureButton>
-          </div>
-        </DisclosurePanel>
-      </Disclosure>
+      <Navbar />
       <Home />
       <AboutMe />
       <Certificate />
@@ -180,519 +1111,24 @@ function Main() {
   );
 }
 
-function Home() {
-  const teks = ["Hi, I'm Andika"];
-
-  const [efekteks, setEfekteks] = useState(0);
-  const [subindex, setSubindex] = useState(0);
-  const [hapusteks, setHapusteks] = useState(false);
-
-  useEffect(() => {
-    if (efekteks >= teks.length) setEfekteks(0);
-
-    const baru = teks[efekteks];
-
-    if (subindex === baru.length + 1 && !hapusteks) {
-      setTimeout(() => setHapusteks(true), 2000);
-      return;
-    }
-
-    if (subindex === 0 && hapusteks) {
-      setHapusteks(false);
-      return;
-    }
-
-    const timeout = setTimeout(
-      () => {
-        setSubindex((prev) => prev + (hapusteks ? -1 : 1));
-      },
-      hapusteks ? 50 : 100
-    );
-
-    return () => clearTimeout(timeout);
-  }, [subindex, hapusteks, efekteks, teks]);
-
-  return (
-    
-    <div
-      className="flex items-center place-content-center sm:flex-row flex-col gap-9 sm:space-x-32 min-h-screen"
-      id="home"
-    >
-
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="fixed inset-0 w-full blur-xs h-full object-cover -z-10"
-      >
-        <source src={bgVideo} type="video/mp4" />
-      </video>
-      <div className=" space-y-1">
-        <h1 className="text-yellow-500 font-bold text-3xl">
-          {teks[efekteks].substring(0, subindex)}
-        </h1>
-        <h1 className="text-yellow-500 font-bold text-xl">Software Engineering Student</h1>
-        <p className="text-yellow-500 w-90">
-I am a Software Engineering Vocational School student who is interested in the world of programming, especially in the fields of web development, applications and information technology.  </p>
-      <div className="flex-1 flex space-x-3">
-          <a
-            href={cv}
-            className="rounded-xl flex gap-3 w-40 mt-3 p-2 border-1 border-black bg-black hover:scale-110 hover:duration-300 hover:border-yellow-500  text-center text-yellow-500 font-semibold"
-            download
-          >
-            <i className="fa-solid fa-file p-1"></i>
-            <h1>            Download CV
-</h1>
-          </a>
-          <a
-            href="#aboutme"
-            className="rounded-xl gap-3 w-40 mt-3 p-2 border-1 border-black bg-black hover:scale-110 hover:duration-300 hover:border-yellow-500  text-center text-yellow-500 font-semibold"
-          >
-            About Me
-          </a>
-        </div>
-      </div>
-      {/* <div className="">
-        <img src={chara} height={100} alt="tes" />
-      </div> */}
-    </div>
-  );
-}
-
-function AboutMe() {
-  return (
-    <div
-      className="flex animasi items-center h-screen scroll-smooth md:scroll-auto flex-col w-full sm:px-50 space-y-10 px-12 justify-center "
-      id="aboutme"
-    >
-      <h1 className="text-yellow-500 text-4xl font-semibold">About</h1>
-      <p className="text-yellow-500 sm:text-xl">
-  My name is Andika Cahya Rahman. I have a strong interest in programming and computers. I enjoy learning new things, both academic and non-academic, especially those I haven't mastered yet. Furthermore, I'm passionate about solving problems effectively in every assignment or project I work on. </p>
-    </div>
-  );
-}
-
-function Certificate() {
-  return (
-    <>
-      <div className=" animasi justify-center items-center mt-40" id="certificate">
-        <h1 className="text-4xl font-semibold text-yellow-500 text-center mb-10">
-          Certificate
-        </h1>
-        <div className="grid sm:grid-cols-3 p-10 place-items-center space-y-10 ">
-          <div className="bg-black animasi hover:scale-105 ease-out duration-300 border-5  border-black">
-            <img src={cisco} alt="" />
-          </div>
-          <div className="bg-black animasi hover:scale-105 ease-out duration-300 border-5  border-black">
-            <img src={linkedinmicrosoft} alt="" />
-          </div>
-          <div className="bg-black animasi hover:scale-105 ease-out duration-300 border-5 border-black">
-            <img src={pelatihan} alt="" />
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
-
-function Skills() {
-  const cardStyle =
-    "bg-black border border-yellow-500/30 rounded-2xl p-6 w-64 hover:-translate-y-2 hover:shadow-yellow-500/20 hover:shadow-lg transition-all duration-300";
-
-  const titleStyle =
-    "text-yellow-500 text-center text-2xl font-bold mt-4";
-
-  return (
-    <div className="mt-40 px-6" id="skills">
-      
-      <h1 className="text-4xl font-bold text-yellow-500 text-center mb-10">
-        Skills
-      </h1>
-
-      <h2 className="text-3xl font-bold text-yellow-500 text-center mb-15">
-        Software Development
-      </h2>
-
-      <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 place-items-center mb-20">
-        
-        <div className={cardStyle}>
-          <img src={html} className="w-24 mx-auto" alt="HTML" />
-          <h3 className={titleStyle}>HTML</h3>
-        </div>
-
-        <div className={cardStyle}>
-          <img src={css} className="w-24 mx-auto" alt="CSS" />
-          <h3 className={titleStyle}>CSS</h3>
-        </div>
-
-        <div className={cardStyle}>
-          <img src={bootstrap} className="w-24 mx-auto" alt="Bootstrap" />
-          <h3 className={titleStyle}>Bootstrap</h3>
-        </div>
-
-        <div className={cardStyle}>
-          <img src={tailwind} className="w-24 mx-auto" alt="Tailwind" />
-          <h3 className={titleStyle}>Tailwind</h3>
-        </div>
-
-        <div className={cardStyle}>
-          <img src={js} className="w-24 mx-auto" alt="JavaScript" />
-          <h3 className={titleStyle}>JavaScript</h3>
-        </div>
-
-        <div className={cardStyle}>
-          <img src={react} className="w-24 mx-auto" alt="React" />
-          <h3 className={titleStyle}>React JS</h3>
-        </div>
-
-        <div className={cardStyle}>
-          <img src={ts} className="w-24 mx-auto" alt="TypeScript" />
-          <h3 className={titleStyle}>TypeScript</h3>
-        </div>
-
-        <div className={cardStyle}>
-          <img src={php} className="w-24 mx-auto" alt="PHP" />
-          <h3 className={titleStyle}>PHP</h3>
-        </div>
-
-        <div className={cardStyle}>
-          <img src={laravel} className="w-24 mx-auto" alt="Laravel" />
-          <h3 className={titleStyle}>Laravel</h3>
-        </div>
-
-        <div className={cardStyle}>
-          <img src={mysql} className="w-24 mx-auto" alt="MySQL" />
-          <h3 className={titleStyle}>MySQL</h3>
-        </div>
-
-        <div className={cardStyle}>
-          <img src={python} className="w-24 mx-auto" alt="Python" />
-          <h3 className={titleStyle}>Python</h3>
-        </div>
-
-        <div className={cardStyle}>
-          <img src={git} className="w-24 mx-auto" alt="Git" />
-          <h3 className={titleStyle}>Git</h3>
-        </div>
-
-        <div className={cardStyle}>
-          <img src={github} className="w-24 mx-auto" alt="GitHub" />
-          <h3 className={titleStyle}>GitHub</h3>
-        </div>
-
-      </div>
-
-      <h2 className="text-3xl font-bold text-yellow-500 text-center mb-10">
-        Cyber Security
-      </h2>
-
-      <div className="flex flex-wrap justify-center gap-10 mb-20">
-        <div className={cardStyle}>
-          <img src={linux} className="w-24 mx-auto" alt="Linux" />
-          <h3 className={titleStyle}>Linux</h3>
-        </div>
-
-        <div className={cardStyle}>
-          <img src={ctf} className="w-24 mx-auto rounded-full" alt="CTF" />
-          <h3 className={titleStyle}>CTF</h3>
-        </div>
-      </div>
-
-      <h2 className="text-2xl font-bold text-yellow-500 text-center mb-10">
-        Game Development
-      </h2>
-
-      <div className="flex flex-wrap justify-center gap-10 mb-20">
-        <div className={cardStyle}>
-          <img src={unity} className="w-24 mx-auto" alt="Unity" />
-          <h3 className={titleStyle}>Unity</h3>
-        </div>
-
-        <div className={cardStyle}>
-          <img src={robloxstudio} className="w-24 mx-auto" alt="Roblox Studio" />
-          <h3 className={titleStyle}>Roblox Studio</h3>
-        </div>
-      </div>
-
-      <h2 className="text-2xl font-bold text-yellow-500 text-center mb-10">
-        Design & Edit
-      </h2>
-
-      <div className="flex flex-wrap justify-center gap-10 mb-20">
-        <div className={cardStyle}>
-          <img src={figma} className="w-24 mx-auto" alt="Figma" />
-          <h3 className={titleStyle}>Figma</h3>
-        </div>
-
-        <div className={cardStyle}>
-          <img src={canva} className="w-24 mx-auto" alt="Canva" />
-          <h3 className={titleStyle}>Canva</h3>
-        </div>
-
-        <div className={cardStyle}>
-          <img src={photoshop} className="w-24 mx-auto" alt="Photoshop" />
-          <h3 className={titleStyle}>Photoshop</h3>
-        </div>
-
-        <div className={cardStyle}>
-          <img src={lightroom} className="w-24 mx-auto" alt="Lightroom" />
-          <h3 className={titleStyle}>Lightroom</h3>
-        </div>
-      </div>
-
-    </div>
-  );
-}
-
-function Project() {
-  return (
-    <div className="animasi mt-40 px-6" id="project">
-      <h1 className="text-4xl font-bold text-center text-yellow-500 mb-16">
-        My Projects
-      </h1>
-
-      <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 place-items-center">
-
-        <div className="bg-black rounded-2xl w-72 sm:w-80 overflow-hidden border border-yellow-500/20 shadow-lg hover:-translate-y-2 hover:shadow-yellow-500/30 transition-all duration-300">
-          <div className="h-60 overflow-hidden">
-            <img src={displaygambar} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" alt="Gym Rex" />
-          </div>
-          <div className="p-6 flex flex-col justify-between h-64">
-            <div>
-              <h2 className="text-yellow-500 text-2xl font-semibold text-center mb-4">Gym Rex</h2>
-              <p className="text-yellow-500 text-sm text-center">
-                This app provides complete gym movement guides with steps and tips.
-                Created as my final vocational project.
-              </p>
-            </div>
-            <a
-              href="https://drive.google.com/file/d/1Ebw4BBCaJQ_F_15VdZ5YrdOJtqHUJjLB/view"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 mx-auto w-32 py-2 rounded-xl border border-yellow-500 text-yellow-500 font-semibold text-center hover:bg-yellow-500 hover:text-black transition duration-300"
-            >
-              View
-            </a>
-          </div>
-        </div>
-
-        <div className="bg-black rounded-2xl w-72 sm:w-80 overflow-hidden border border-yellow-500/20 shadow-lg hover:-translate-y-2 hover:shadow-yellow-500/30 transition-all duration-300">
-          <div className="h-60 overflow-hidden">
-            <img src={flappymonkey} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" alt="Flappy Monkey" />
-          </div>
-          <div className="p-6 flex flex-col justify-between h-64">
-            <div>
-              <h2 className="text-yellow-500 text-2xl font-semibold text-center mb-4">Flappy Monkey</h2>
-              <p className="text-yellow-500 text-sm text-center">
-                Inspired by Flappy Bird. Players score by passing through pipe obstacles.
-                Created as my vocational final project.
-              </p>
-            </div>
-            <a
-              href="https://drive.google.com/file/d/1OD4UT5H0jQQZN6uLEM0KvRud4Me_35RB/view"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 mx-auto w-32 py-2 rounded-xl border border-yellow-500 text-yellow-500 font-semibold text-center hover:bg-yellow-500 hover:text-black transition duration-300"
-            >
-              View
-            </a>
-          </div>
-        </div>
-
-          <div className="bg-black rounded-2xl w-72 sm:w-80 overflow-hidden border border-yellow-500/20 shadow-lg hover:-translate-y-2 hover:shadow-yellow-500/30 transition-all duration-300">
-          <div className="h-60 overflow-hidden">
-            <img src={sakusiswa} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" alt="Saku Siswa" />           </div>
-          <div className="p-6 flex flex-col justify-between h-64">
-            <div>
-   <h2 className="text-yellow-500 text-2xl font-semibold text-center mb-4">Saku Siswa</h2>      
-     <p className="text-yellow-500 text-sm text-center">                 A student financial management system designed to help students                 manage and monitor their expenses.               </p>
-            </div>
-            <a
-              href="https://drive.google.com/file/d/1OD4UT5H0jQQZN6uLEM0KvRud4Me_35RB/view"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 mx-auto w-32 py-2 rounded-xl border border-yellow-500 text-yellow-500 font-semibold text-center hover:bg-yellow-500 hover:text-black transition duration-300"
-            >
-              View
-            </a>
-          </div>
-        </div>
-
-     
-        
-
-        <div className="bg-black rounded-2xl w-72 sm:w-80 overflow-hidden border border-yellow-500/20 shadow-lg hover:-translate-y-2 hover:shadow-yellow-500/30 transition-all duration-300">
-          <div className="h-60 overflow-hidden">
-            <img src={perpus} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" alt="E-Library" />
-          </div>
-          <div className="p-6 flex flex-col justify-between h-64">
-            <div>
-              <h2 className="text-yellow-500 text-2xl font-semibold text-center mb-4">E-Library</h2>
-              <p className="text-yellow-500 text-sm text-center">
-                An online library system that allows users to read and borrow books
-                without visiting the physical library.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-black rounded-2xl w-72 sm:w-80 overflow-hidden border border-yellow-500/20 shadow-lg hover:-translate-y-2 hover:shadow-yellow-500/30 transition-all duration-300">
-          <div className="h-60 overflow-hidden">
-            <img src={portfolio5} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" alt="CharacterBot" />
-          </div>
-          <div className="p-6 flex flex-col justify-between h-64">
-            <div>
-              <h2 className="text-yellow-500 text-2xl font-semibold text-center mb-4">CharacterBot</h2>
-              <p className="text-yellow-500 text-sm text-center">
-                A website that allows users to chat directly with their favorite
-                anime characters.
-              </p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      </div>
-  );
-}
-
-
-function Contact() {
-  return (
-    <>
-      <div
-        className="animasi flex flex-col mt-40 justify-center items-center"
-        id="contact"
-      >
-        <h1 className="text-yellow-500 font-semibold text-4xl text-center mb-5">
-          Contact
-        </h1>
-        <p className="text-yellow-500 text-xl mb-10">You can contact me by this contact</p>
-        <div className="grid rounded-2xl sm:grid-cols-2 place-items-center bg-blue-100 border-4 border-black">
-          <div className=" sm:w-100 w-80 sm:h-90 h-100 rounded-xl place-content-center">
-            <form
-              action="https://formspree.io/f/myzpqran"
-              method="POST"
-              className=" flex-col p-10 "
-            >
-              <h1 className="font-bold text-center text-black text-3xl">
-                Form{" "}
-              </h1>
-              <label className="text-black font-semibold">
-                {" "}
-                Email
-                <input
-                  type="email"
-                  className="w-full border-1 border-black p-2 text-black bg-white rounded-xs"
-                  placeholder="Email"
-                  name="email"
-                />
-              </label>
-              <label className="text-black font-semibold">
-                {" "}
-                Pesan
-                <textarea
-                  name="message"
-                  className="w-full text-black border-1 border-black bg-white rounded-xs"
-                  placeholder="Pesan"
-                >
-                  {" "}
-                </textarea>
-              </label>
-              <button
-                type="submit"
-                className="mt-5 bg-black border-1 hover:border-yellow-500 text-yellow-500"
-              >
-                Submit
-              </button>
-            </form>
-          </div>
-          <div className="bg-black p-10 space-y-8 h-full place-content-center">
-            <div className="place-content-center space-y-10">
-              <div className=" flex space-x-3">
-                <i className="fa-brands text-yellow-500 fa-whatsapp  text-3xl"></i>
-                <h1 className="text-yellow-500">+62 887-1729-638</h1>
-              </div>
-              <div className=" flex space-x-3 ">
-                <i className="fa-solid fa-envelope text-yellow-500 text-3xl"></i>
-                <h1 className="text-yellow-500">andikacrwork@gmail.com</h1>
-              </div>
-               <div className=" flex space-x-3 ">
-              <i className="fa-solid fa-location-dot text-yellow-500 text-3xl"></i>
-                <h1 className="text-yellow-500">East Jakarta, Jakarta, Indonesia</h1>
-              </div>
-            </div>
-          
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
-
-function Footer() {
-  const waktu = new Date().getFullYear();
- 
-  return (
-    <>
-      <div className="bg-black mt-30 sm:h-110 h-200">
-        <div className="grid place-items-center space-y-10">
-          <h1 className="text-yellow-500 font-semibold text-3xl mt-30">Portfolio</h1>
-          <div className="flex sm:flex-row flex-col gap-10">
-            <a href="#home" className="text-yellow-500 font-bold ">
-              Home
-            </a>
-            <a href="#aboutme" className="text-yellow-500 font-semibold ">
-              About
-            </a>
-            <a href="#skills" className="text-yellow-500 font-semibold ">Skills</a>
-
-            <a href="#certificate" className="text-yellow-500 font-semibold ">
-              Certificate
-            </a>
-            <a href="#project" className="text-yellow-500 font-semibold ">
-              Project
-            </a>
-            <a href="#contact" className="text-yellow-500 font-semibold ">Contact</a>
-          </div>
-            <div className="relative flex justify-center items-center p-3">
-              <div className="flex flex-1 sm:absolute  bottom-0 space-x-10 text-center ">
-                <a href="https://www.linkedin.com/in/andika-cahya-rahman-a6704b2a2/">
-                  <i className="fa-brands fa-linkedin text-yellow-500  text-3xl"></i>
-                </a>
-                                <a href="https://www.instagram.com/kuroshii274._">
-                  <i className="fa-brands fa-instagram text-yellow-500 text-3xl"></i>
-                </a>
-                <a href="https://github.com/kuroshii251">
-                  <i className="fa-brands fa-github text-yellow-500  text-3xl"></i>
-                </a>
-              </div>
-            </div>
-          <div>
-            <hr className="text-yellow-500` sm:w-160" />
-            <h1 className="text-center place-content-center mt-10 text-yellow-500 ">Copyright {waktu} by Andika</h1>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
-
 function SystemLoading() {
   const [loading, setLoading] = useState(true);
   const [fadeout, setFadeout] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const t = setTimeout(() => {
       setFadeout(true);
       setTimeout(() => setLoading(false), 1000);
     }, 3000);
-
-    return () => clearTimeout(timer);
+    return () => clearTimeout(t);
   }, []);
 
-  return <>{loading ? <LoadingScreen fadeout={fadeout} /> : <Main />}</>;
+  return (
+    <>
+      <StyleInjector />
+      {loading ? <LoadingScreen fadeout={fadeout} /> : <Main />}
+    </>
+  );
 }
 
 export default SystemLoading;
