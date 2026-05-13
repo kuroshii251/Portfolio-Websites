@@ -168,19 +168,21 @@ function useFadeIn(ref: React.RefObject<HTMLElement | null>) {
     );
     obs.observe(ref.current);
     return () => obs.disconnect();
-  }, []);
+  }, [ref]);
 }
+
+const boot = [
+  "Initializing secure shell...",
+  "Loading kernel modules...",
+  "Detecting hardware...",
+  "Mounting file systems...",
+  "Starting services...",
+  "Welcome to ANDIKA_CAHYA_RAHMAN.SYS",
+];
 
 function LoadingScreen({ fadeout }: { fadeout: boolean }) {
   const [dots, setDots] = useState<string>("");
   const [lines, setLines] = useState<string[]>([]);
-  const boot = [
-    "Initializing secure environment...",
-    "Loading encrypted modules...",
-    "Establishing connection...",
-    "Authenticating identity...",
-    "Access granted.",
-  ];
 
   useEffect(() => {
     let i = 0;
@@ -908,7 +910,7 @@ function Contact() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("sending");
     try {
