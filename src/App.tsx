@@ -894,8 +894,10 @@ function Project() {
     },
     {
       src: portfolio5,
-      title: "CharacterBot",
-      desc: "A web app where users can chat directly with their favorite anime characters powered by AI.",
+      title: "Chat.in",
+      desc: "A web app where users can chat directly with their favorite idol or character powered by AI.",
+      href: "https://chat-in-8l9g.vercel.app/",
+
     },
   ];
 
