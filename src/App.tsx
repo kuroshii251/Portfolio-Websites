@@ -9,7 +9,15 @@ import { useEffect, useState, useRef } from "react";
 import linux        from "./assets/logo/linux-svgrepo-com.svg";
 import ts           from "./assets/ts.svg";
 import portfolio5   from "./assets/portfolio5.png";
-import sakusiswa    from "./assets/sakusiswa.png";
+import portfolio8   from "./assets/project.png";
+import gymrex   from "./assets/gymrex.png";
+import nextjs from "./assets/Next.js.png";
+import reactnative from "./assets/React.png";
+import nodejs from "./assets/Node.js.png";
+import csharp from "./assets/csharp.png";
+import pythoncourse    from "./assets/pythoncourse.png";
+import webprogramming    from "./assets/webprogramming.png";
+import nasa    from "./assets/letter.jpg";
 import ctf          from "./assets/logo/imagesctf.jpg";
 import bootstrap    from "./assets/bootstrap.png";
 import php          from "./assets/logo/php-svgrepo-com.svg";
@@ -29,8 +37,9 @@ import photoshop    from "./assets/logo/photoshop-cc-logo-svgrepo-com.svg";
 import canva        from "./assets/canva.png";
 import laravel      from "./assets/logo/laravel-svgrepo-com.svg";
 import lightroom    from "./assets/logo/adobe-lightroom-svgrepo-com.svg";
-import displaygambar from "./assets/display.png";
 import flappymonkey from "./assets/gambar2.jpg";
+import portfolio6 from "./assets/portfolio6.png";
+import sakusiswa          from "./assets/sakusiswa.png";
 import perpus       from "./assets/gambar2.png";
 import cv           from "./assets/CV - Andika Cahya Rahman.pdf";
 import git          from "./assets/gittt.png";
@@ -137,7 +146,6 @@ const GLOBAL_CSS = `
     background: var(--green-dim);
   }
 
-  /* glow text */
   .glow {
     text-shadow: 0 0 20px rgba(0,255,65,0.5), 0 0 60px rgba(0,255,65,0.2);
   }
@@ -214,7 +222,6 @@ function LoadingScreen({ fadeout }: { fadeout: boolean }) {
         fontFamily: "'Share Tech Mono', monospace",
       }}
     >
-      {/* ASCII border */}
       <div style={{ color: "#00cc33", fontSize: 13, lineHeight: 1.3, userSelect: "none" }}>
         {`╔════════════════════════════════╗`}<br/>
         {`║   ANDIKA_CAHYA_RAHMAN.SYS v2.0    ║`}<br/>
@@ -284,7 +291,6 @@ function Navbar() {
     >
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
         <div style={{ height: 60, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          {/* Logo */}
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <span style={{ fontFamily: "var(--font-mono)", color: "var(--green)", fontSize: 13 }}>{"["}</span>
             <span style={{ fontFamily: "var(--font-body)", fontWeight: 700, color: "var(--green)", fontSize: 15, letterSpacing: "0.05em" }}>
@@ -463,7 +469,7 @@ function Home() {
           style={{
             fontFamily: "var(--font-mono)",
             color: "var(--green)",
-            fontSize: "clamp(36px, 6vw, 64px)",
+            fontSize: "clamp(30px, 4vw, 64px)",
             fontWeight: 700,
             lineHeight: 1.1,
             marginBottom: 16,
@@ -538,8 +544,8 @@ function Home() {
 
         <div style={{ display: "flex", gap: 20, marginTop: 48 }}>
           {[
-            { href: "https://www.linkedin.com/in/andika-cahya-rahman-a6704b2a2/", icon: "fab fa-linkedin" },
-            { href: "https://www.instagram.com/kuroshii274._", icon: "fab fa-instagram" },
+            { href: "https://www.linkedin.com/in/andika-cahya-rahman/", icon: "fab fa-linkedin" },
+            { href: "https://www.instagram.com/snchrhmn._/", icon: "fab fa-instagram" },
             { href: "https://github.com/kuroshii251", icon: "fab fa-github" },
           ].map((s) => (
             <a key={s.href} href={s.href} target="_blank" rel="noopener noreferrer"
@@ -609,7 +615,6 @@ function AboutMe() {
         position: "relative",
         overflow: "hidden",
       }}>
-        {/* top bar */}
         <div style={{ display: "flex", gap: 6, marginBottom: 24 }}>
           {["#ff5f57","#febc2e","#28c840"].map((c, i) => (
             <div key={i} style={{ width: 12, height: 12, borderRadius: "50%", background: c, opacity: 0.7 }} />
@@ -633,7 +638,6 @@ function AboutMe() {
           <div><span style={{ color: "var(--green3)" }}>$ _</span></div>
         </div>
 
-        {/* decorative corner */}
         <div style={{
           position: "absolute", bottom: 0, right: 0,
           width: 80, height: 80,
@@ -650,7 +654,12 @@ function Certificate() {
   const certs = [
     { src: cisco,            label: "Cisco" },
     { src: linkedinmicrosoft, label: "LinkedIn × Microsoft" },
-    { src: pelatihan,        label: "Pelatihan" },
+    { src: pelatihan,        label: "Software Engineering Training" },
+    { src: nasa,       label: "Letter of Recognition" },
+    { src: webprogramming,       label: "Web Programming" },
+    { src: pythoncourse,       label: "Introduction to Python" },
+
+
   ];
 
   return (
@@ -662,6 +671,7 @@ function Certificate() {
               background: "var(--surface)",
               border: "1px solid var(--border)",
               borderRadius: 4,
+              alignItems:"start",
               overflow: "hidden",
               transition: "all 0.3s",
               cursor: "default",
@@ -677,8 +687,7 @@ function Certificate() {
               e.currentTarget.style.transform = "none";
             }}
           >
-            <img src={c.src} alt={c.label} style={{ width: "100%", display: "block" }} />
-            <div style={{
+<img src={c.src} alt={c.label} style={{ width: "100%", display: "block" }} />        <div style={{
               padding: "12px 16px",
               fontFamily: "var(--font-mono)",
               fontSize: 12,
@@ -768,6 +777,9 @@ function Skills() {
         <SkillCard src={laravel}   label="Laravel" />
         <SkillCard src={mysql}     label="MySQL" />
         <SkillCard src={python}    label="Python" />
+         <SkillCard src={nextjs}    label="Next JS" />
+        <SkillCard src={nodejs}    label="Node JS" />
+        <SkillCard src={reactnative}    label="React Native" />
         <SkillCard src={git}       label="Git" />
         <SkillCard src={github}    label="GitHub" />
       </SkillGroup>
@@ -778,10 +790,10 @@ function Skills() {
       </SkillGroup>
 
       <SkillGroup title="Game Development">
-        <SkillCard src={unity}       label="Unity" />
-        <SkillCard src={robloxstudio} label="Roblox Studio" />
+      <SkillCard src={unity}       label="Unity" />
+      <SkillCard src={robloxstudio} label="Roblox Studio" />
+        <SkillCard src={csharp}    label="C#" />
       </SkillGroup>
-
       <SkillGroup title="Design & Edit">
         <SkillCard src={figma}      label="Figma" />
         <SkillCard src={canva}      label="Canva" />
@@ -792,7 +804,19 @@ function Skills() {
   );
 }
 
-function ProjectCard({ src, title, desc, href }: { src: string; title: string; desc: string; href?: string }) {
+function ProjectCard({
+  src,
+  title,
+  desc,
+  tech = [],
+  href
+}: {
+  src: string;
+  title: string;
+  desc: string;
+  tech?: string[];
+  href?: string;
+}) {
   return (
     <div
       style={{
@@ -827,16 +851,37 @@ function ProjectCard({ src, title, desc, href }: { src: string; title: string; d
       </div>
 
       <div style={{ padding: "20px 24px", flex: 1, display: "flex", flexDirection: "column", gap: 12 }}>
-        <h3 style={{
-          fontFamily: "var(--font-body)",
-          fontWeight: 700,
-          fontSize: 18,
-          color: "var(--green)",
-          letterSpacing: "0.03em",
-        }}>
-          {title}
-        </h3>
-        <p style={{ color: "var(--text2)", fontSize: 14, lineHeight: 1.7, flex: 1 }}>{desc}</p>
+        <h3>
+  {title}
+</h3>
+
+<div
+  style={{
+    display: "flex",
+    flexWrap: "wrap",
+    gap: 8,
+    marginBottom: 12,
+  }}
+>
+  {tech.map((item) => (
+    <span
+      key={item}
+      style={{
+        padding: "4px 10px",
+        border: "1px solid var(--green3)",
+        borderRadius: 4,
+        fontSize: 12,
+        fontFamily: "var(--font-mono)",
+        color: "var(--green)",
+        background: "rgba(0,255,65,0.05)",
+      }}
+    >
+      {item}
+    </span>
+  ))}
+</div>
+
+<p>{desc}</p>
         {href && (
           <a
             href={href}
@@ -870,33 +915,55 @@ function ProjectCard({ src, title, desc, href }: { src: string; title: string; d
 function Project() {
   const projects = [
     {
-      src: displaygambar,
+      src: gymrex,
       title: "Gym Rex",
+      tech:["React Native", "SQLite", "Javascript", "TypeScript"],
       desc: "A complete gym movement guide app with step-by-step instructions and tips. Built as my vocational final project.",
       href: "https://drive.google.com/file/d/1Ebw4BBCaJQ_F_15VdZ5YrdOJtqHUJjLB/view",
     },
     {
       src: flappymonkey,
       title: "Flappy Monkey",
+      tech: ["Unity", "C#"],
       desc: "Inspired by Flappy Bird — players score by navigating through pipe obstacles. Vocational final project in Unity.",
       href: "https://drive.google.com/file/d/1OD4UT5H0jQQZN6uLEM0KvRud4Me_35RB/view",
     },
     {
       src: sakusiswa,
       title: "Saku Siswa",
+      tech:["Laravel", "PHP", "Tailwind CSS", "MySQL"],
+
       desc: "A student financial management system to help students track and monitor their daily expenses.",
       href: "https://drive.google.com/file/d/1OD4UT5H0jQQZN6uLEM0KvRud4Me_35RB/view",
     },
     {
       src: perpus,
       title: "E-Library",
+      tech:["Laravel", "PHP", "Tailwind CSS", "MySQL"],
       desc: "An online library platform allowing users to read and borrow books digitally without visiting physically.",
     },
     {
       src: portfolio5,
       title: "Chat.in",
+      tech:["Python", "Flask", "Tailwind CSS"],
       desc: "A web app where users can chat directly with their favorite idol or character powered by AI.",
       href: "https://chat-in-8l9g.vercel.app/",
+
+    },
+     {
+      src: portfolio6,
+      title: "Sport On",
+      tech:["Next JS", "Express Js", "Javascript", "Tailwind CSS", "Mongodb"],
+      desc: "A e-commerce web for sports enthusiasts to discover events, teams, and players.",
+      href: "https://github.com/kuroshii251/SportOn",
+
+    },
+     {
+      src: portfolio8,
+      title: "Everie Books",
+      tech:["Laravel", "PHP", "Tailwind CSS", "MySQL"],
+      desc: "A e-commerce web where users can browse and purchase books online.",
+      href: "https://github.com/kuroshii251/BookStore",
 
     },
   ];
@@ -946,9 +1013,8 @@ function Contact() {
 
 
   return (
-    <Section id="contact" label="" title="Contact">
+    <Section id="contact" label="" title="Contact for Projects & Collaboration">
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 32, maxWidth: 900, margin: "0 auto" }}>
-        {/* Form */}
         <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 4, padding: 32 }}>
           <div style={{ display: "flex", gap: 6, marginBottom: 24 }}>
             {["#ff5f57","#febc2e","#28c840"].map((c, i) => (
@@ -1018,7 +1084,6 @@ function Contact() {
           )}
         </div>
 
-        {/* Info */}
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 28 }}>
           {[
             { icon: "fab fa-whatsapp", label: "WHATSAPP", value: "+62 887-1729-638" },
@@ -1081,8 +1146,8 @@ function Footer() {
 
       <div style={{ display: "flex", justifyContent: "center", gap: 20, marginBottom: 32 }}>
         {[
-          { href: "https://www.linkedin.com/in/andika-cahya-rahman-a6704b2a2/", icon: "fab fa-linkedin" },
-          { href: "https://www.instagram.com/kuroshii274._", icon: "fab fa-instagram" },
+          { href: "https://www.linkedin.com/in/andika-cahya-rahman", icon: "fab fa-linkedin" },
+          { href: "https://www.instagram.com/snchrhmn._/", icon: "fab fa-instagram" },
           { href: "https://github.com/kuroshii251", icon: "fab fa-github" },
         ].map((s) => (
           <a key={s.href} href={s.href} target="_blank" rel="noopener noreferrer"
