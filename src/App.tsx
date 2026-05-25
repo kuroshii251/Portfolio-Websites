@@ -45,7 +45,6 @@ import cv           from "./assets/CV - Andika Cahya Rahman.pdf";
 import git          from "./assets/gittt.png";
 import github       from "./assets/github.webp";
 import robloxstudio from "./assets/rstudio.png";
-import profile from "./assets/profile.png";
 
 const GLOBAL_CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap');
@@ -442,7 +441,7 @@ function Home() {
   return (
    <section
   id="home"
-  className="flex flex-col md:flex-row items-center justify-center gap-10"
+  className="flex flex-col md:flex-row items-start justify-start gap-10"
   style={{
     minHeight: "92vh",
     padding: "60px 24px",
@@ -492,13 +491,12 @@ function Home() {
           alignItems: "center",
           gap: 10,
         }}>
-          Software Engineering Student
+Full-Stack Developer
         </div>
 
         <p style={{ color: "var(--text)", lineHeight: 1.8, fontSize: 16, maxWidth: 560, marginBottom: 36 }}>
-          A vocational school student passionate about web development, application engineering,
-          and information security. Always hunting for the next challenge.
-        </p>
+Passionate about web development, software engineering, and information security.
+Always hunting for the next challenge.        </p>
 
         <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
           <a
@@ -524,7 +522,7 @@ function Home() {
             <span>↓</span> ./download_cv
           </a>
           <a
-            href="#aboutme"
+            href="#about"
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: 13,
@@ -558,14 +556,6 @@ function Home() {
           ))}
         </div>
       </div>
-
-     <div className="flex">
-  <img
-    src={profile}
-    alt="Profile"
-    className="w-150 md:w-200"
-  />
-</div>
 
       <div style={{ position: "absolute", top: 40, right: 40, fontFamily: "var(--font-mono)", color: "var(--green-dim)", fontSize: 11, lineHeight: 1.5, userSelect: "none", display: "none" }} className="sm:block">
         {`> STATUS: ONLINE`}<br/>
@@ -604,7 +594,7 @@ function Section({ id, label, title, children, style = {} }: { id: string; label
 
 function AboutMe() {
   return (
-    <Section id="aboutme" label="" title="About Me">
+    <Section id="about" label="" title="About Me">
       <div style={{
         maxWidth: 800,
         margin: "0 auto",
@@ -625,14 +615,7 @@ function AboutMe() {
           <div><span style={{ color: "var(--green3)" }}>$ cat</span> <span style={{ color: "var(--text2)" }}>profile.txt</span></div>
           <br/>
           <div style={{ color: "var(--text)", fontSize: 16, fontFamily: "var(--font-body)", lineHeight: 1.8 }}>
-            My name is <span style={{ color: "var(--green)", fontWeight: 600 }}>Andika Cahya Rahman</span>. I have a strong
-            interest in programming and computers. I enjoy learning new things — academic and
-            non-academic alike — especially areas I haven't yet mastered.
-          </div>
-          <br/>
-          <div style={{ color: "var(--text)", fontSize: 16, fontFamily: "var(--font-body)", lineHeight: 1.8 }}>
-            I'm passionate about solving problems effectively in every assignment or project I take on,
-            and I continuously seek to sharpen my skills in both development and security.
+            I'm <span style={{ color: "var(--green)", fontWeight: 600 }}>Andika Cahya Rahman, </span>a Full-Stack Developer who is interested in web development, software engineering, and information security. I enjoy working on projects that help me improve my problem-solving and technical skills, while continuing to learn new technologies and development practices.
           </div>
           <br/>
           <div><span style={{ color: "var(--green3)" }}>$ _</span></div>
